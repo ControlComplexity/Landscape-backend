@@ -1,0 +1,183 @@
+syntax = "proto3";
+package reservation;
+
+import "google/api/annotations.proto";
+option go_package = "github.com/reservation/api";
+service ReservationService {
+  // 获取预约系统状态信息.
+  rpc GetSystemInfo(GetSystemInfoReq) returns (GetSystemInfoResp) {
+    option (google.api.http) = {
+      get: "/v1/get_system_info"
+    };
+  }
+
+  rpc Register (RegisterReq)returns (RegisterResp){
+    option (google.api.http) = {
+      post: "/v1/user/register"
+      body: "*"
+    };
+  }
+
+  rpc Login (LoginReq)returns (LoginResp){
+    option (google.api.http) = {
+      post: "/v1/user/login"
+      body: "*"
+    };
+  }
+
+  rpc GenerateMBTI (GenerateMBTIReq)returns (GenerateMBTIResp){
+    option (google.api.http) = {
+      post: "/v1/user/generate_mbti"
+      body: "*"
+    };
+  }
+
+  rpc QueryOrderList (QueryOrderListReq)returns (QueryOrderListResp){
+    option (google.api.http) = {
+      post: "/v1/query/order_list"
+      body: "*"
+    };
+  }
+
+  // 获取全部可参加的活动列表
+  rpc QueryActivityList(QueryActivityListReq) returns (QueryActivityListResp) {
+    option (google.api.http) = {
+      post: "/v1/query/activity_list"
+      body: "*"
+    };
+  }
+  // 获取某一天的可参加的活动列表
+  rpc QueryActivityListByDay(QueryActivityListByDayReq) returns (QueryActivityListByDayResp) {
+    option (google.api.http) = {
+      post: "/v1/query/activity_list_by_day"
+      body: "*"
+    };
+  }
+}
+message GenerateMBTIReq{
+
+}
+
+message GenerateMBTIResp{
+
+}
+
+message RegisterReq{
+
+}
+
+message RegisterResp{
+
+}
+
+message LoginReq{
+
+}
+
+message LoginResp{
+
+}
+
+message QueryOrderListReq{
+
+}
+
+message QueryOrderListResp{
+
+}
+
+// GetSystemInfoReq 表示获取系统信息请求.
+message GetSystemInfoReq {
+}
+
+// GetSystemInfoResp 表示获取系统信息响应.
+message GetSystemInfoResp {
+  // 已使用磁盘空间总数, 单位兆字节.
+  int64 totalUsedMb          = 1;
+  // 磁盘空间容量总数, 单位兆字节.
+  int64 totalMb               = 2;
+  // 可用磁盘容量, 单位兆字节.
+  int64 availableMb           = 3;
+  // 是否成功访问
+  bool success                 = 8;
+  // 错误码
+  string errorCode            = 9;
+  // 错误详情
+  string errorMsg             = 10;
+}
+// 获取某一天的可参加的活动列表请求
+message QueryActivityListByDayReq{
+  //日期，格式为 "20221226"
+  string day = 1;
+}
+
+// 获取某一天的可参加的活动列表返回
+message QueryActivityListByDayResp{
+  //活动列表数据
+  message Data {
+    // 当前页记录数
+    int32 size                                          = 1;
+    // 总页数
+    int32 pages                                         = 2;
+    // 本次请求结果实际页码, 一般与请求参数一致
+    int32 pageNum                                      = 3 ;
+    // 分页大小
+    int32 pageSize                                     = 4 ;
+    repeated Activity activityList = 5;
+    // 查询命中的对象总数, 请求参数trackTotalHits为真时生效, 否则返回-1
+    int32 total                                         = 6;
+  }
+  //活动列表数据
+  Data data         = 1;
+  // 是否成功访问
+  bool success                 = 8;
+  // 错误码
+  string errorCode            = 9;
+  // 错误详情
+  string errorMsg             = 10;
+}
+// 获取全部可参加的活动列表请求
+message QueryActivityListReq{
+}
+// 获取全部可参加的活动列表返回
+message QueryActivityListResp{
+  //活动列表数据
+  message Data {
+    // 当前页记录数
+    int32 size                                          = 1;
+    // 总页数
+    int32 pages                                         = 2;
+    // 本次请求结果实际页码, 一般与请求参数一致
+    int32 pageNum                                      = 3 ;
+    // 分页大小
+    int32 pageSize                                     = 4 ;
+    repeated Activity activityList = 5;
+    // 查询命中的对象总数, 请求参数trackTotalHits为真时生效, 否则返回-1
+    int32 total                                         = 6;
+  }
+  //活动列表数据
+  Data data         = 1;
+  // 是否成功访问
+  bool success                 = 8;
+  // 错误码
+  string errorCode            = 9;
+  // 错误详情
+  string errorMsg             = 10;
+}
+//活动详情
+message Activity{
+  //名称
+string name = 1;
+//价格
+float  price = 2;
+//时间戳
+int64 timestamp= 3;
+//
+string location = 4;
+//小图
+string small_img = 5;
+// 大图
+string big_img = 6;
+//描述
+string description = 7;
+}
