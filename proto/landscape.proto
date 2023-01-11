@@ -1,0 +1,196 @@
+syntax = "proto3";
+package landscape;
+import "validate/validate.proto";
+import "google/api/annotations.proto";
+option go_package = "github.com/landscape/api";
+service LandscapeService {
+  // 查询文章列表
+  rpc QueryEssayList (QueryEssayListReq)returns (QueryEssayListResp){
+    option (google.api.http) = {
+      get: "/v1/query/essay_list"
+    };
+  }
+ // 查询相关文章
+  rpc QueryRelatedEssayList (QueryRelatedEssayListReq)returns (QueryRelatedEssayListResp){
+    option (google.api.http) = {
+      get: "/v1/query/related_essay_list"
+    };
+  }
+  //根据UUID查询单篇文章内容
+  rpc QueryOneEssay (QueryOneEssayReq)returns (QueryOneEssayResp){
+    option (google.api.http) = {
+      get: "/v1/query/one_essay"
+    };
+  }
+
+  //获取城市列表
+rpc QueryCityList (QueryCityListReq)returns (QueryCityListResp){
+    option (google.api.http) = {
+      get: "/v1/query/city_list"
+    };
+  }
+
+  //获取轮播图图片列表
+rpc QuerySwiperImageList (QuerySwiperImageListReq)returns (QuerySwiperImageListResp){
+    option (google.api.http) = {
+      get: "/v1/query/swiper_image_list"
+    };
+  }
+
+  //文章排行榜接口
+  rpc QueryRankList (QueryRankListReq)returns (QueryRankListResp){
+    option (google.api.http) = {
+      get: "/v1/query/rank_list"
+    };
+  }
+
+  //城市图片接口
+  rpc QueryCityImage (QueryCityImageReq)returns (QueryCityImageResp){
+    option (google.api.http) = {
+      get: "/v1/query/city_image"
+    };
+  }
+}
+//城市图片接口请求
+message QueryCityImageReq{
+  //城市
+ string city = 1;
+}
+
+//城市图片接口请求
+message QueryCityImageResp{
+  //图片
+  string image = 1;
+}
+
+//文章排行榜接口请求
+message QueryRankListReq{
+  string city = 1;
+}
+
+//文章排行榜接口返回
+message QueryRankListResp{
+  //文章UUID列表
+ repeated string uuid = 1;
+}
+
+//获取轮播图图片列表请求
+message QuerySwiperImageListReq{
+}
+
+//获取轮播图图片列表返回
+message QuerySwiperImageListResp{
+  //轮播图片列表
+  repeated string image       = 1;
+  // 是否成功访问
+  bool success                = 2;
+  // 错误码
+  string errorCode            = 3;
+  // 错误详情
+  string errorMsg             = 4;
+}
+
+//获取省份和城市的接口请求
+message QueryCityListReq{}
+//获取省份和城市的接口返回
+message QueryCityListResp{
+  repeated Province Provinces = 1;
+  // 是否成功访问
+  bool success                 = 2;
+  // 错误码
+  string errorCode            = 3;
+  // 错误详情
+  string errorMsg             = 4;
+
+}
+//省份
+message Province{
+  //省份名称
+  string name = 1;
+  //城市
+  repeated string cities = 2;
+}
+
+//查询某一篇文章内容的请求
+message QueryOneEssayReq{
+  //UUID，一篇文章的唯一编号
+  string uuid = 1;
+}
+
+//查询某一篇文章内容的返回
+message QueryOneEssayResp{
+  //文章
+   Essay essay              = 1 ;
+  // 是否成功访问
+  bool success              = 2;
+  // 错误码
+  string errorCode          = 3;
+  // 错误详情
+  string errorMsg           = 4;
+}
+
+//查询相关文章列表请求
+message QueryRelatedEssayListReq{
+  //UUID，一篇文章的唯一编号
+   string uuid = 1;
+  // 本次请求结果实际页码, 一般与请求参数一致
+  int32 pageNum                                      = 3 ;
+  // 分页大小
+  int32 pageSize                                     = 4 ;
+}
+//查询相关文章列表返回
+message QueryRelatedEssayListResp{
+ //文章
+ repeated Essay essayList = 5;
+  // 是否成功访问
+  bool success                 = 2;
+  // 错误码
+  string errorCode            = 3;
+  // 错误详情
+  string errorMsg             = 4;
+}
+//查询文章列表请求
+message QueryEssayListReq{
+  //城市。如果不限的话，就传递空数组
+  repeated string cities = 1;
+  //文章类型
+  repeated string types = 2;
+  //关键字
+  string keywords = 3;
+  // 本次请求结果实际页码, 一般与请求参数一致
+  int32 pageNum = 4 [(validate.rules).int32.gt = 0];
+  // 分页大小
+  int32 pageSize = 5 [(validate.rules).int32.gt = 0];
+}
+
+message QueryEssayListResp{
+  repeated Essay essayList = 1;
+  // 是否成功访问
+  bool success                 = 2;
+  // 错误码
+  string errorCode            = 3;
+  // 错误详情
+  string errorMsg             = 4;
+}
+
+//文章
+message Essay{
+  //UUID，一篇文章的唯一编号
+  string uuid = 1;
+  //标题
+  string title = 2;
+  //内容
+  string content = 3;
+  //发表时间
+  int64 time = 4;
+  //所属城市
+  string city = 5;
+  //文章类型
+  string type = 6;
+  // 图片
+  string image = 7;
+  // 点击量
+  int32  hits = 8;
+  // 顶
+  int32  like = 9;
+}

@@ -1,0 +1,512 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "proto/landscape.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "LandscapeService"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/query/city_image": {
+      "get": {
+        "summary": "城市图片接口",
+        "operationId": "LandscapeService_QueryCityImage",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/landscapeQueryCityImageResp"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "city",
+            "description": "城市",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "LandscapeService"
+        ]
+      }
+    },
+    "/v1/query/city_list": {
+      "get": {
+        "summary": "获取城市列表",
+        "operationId": "LandscapeService_QueryCityList",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/landscapeQueryCityListResp"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "tags": [
+          "LandscapeService"
+        ]
+      }
+    },
+    "/v1/query/essay_list": {
+      "get": {
+        "summary": "查询文章列表",
+        "operationId": "LandscapeService_QueryEssayList",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/landscapeQueryEssayListResp"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "cities",
+            "description": "城市。如果不限的话，就传递空数组",
+            "in": "query",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "collectionFormat": "multi"
+          },
+          {
+            "name": "types",
+            "description": "文章类型",
+            "in": "query",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "collectionFormat": "multi"
+          },
+          {
+            "name": "keywords",
+            "description": "关键字",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "pageNum",
+            "description": "本次请求结果实际页码, 一般与请求参数一致",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "pageSize",
+            "description": "分页大小",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "tags": [
+          "LandscapeService"
+        ]
+      }
+    },
+    "/v1/query/one_essay": {
+      "get": {
+        "summary": "根据UUID查询单篇文章内容",
+        "operationId": "LandscapeService_QueryOneEssay",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/landscapeQueryOneEssayResp"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "uuid",
+            "description": "UUID，一篇文章的唯一编号",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "LandscapeService"
+        ]
+      }
+    },
+    "/v1/query/rank_list": {
+      "get": {
+        "summary": "文章排行榜接口",
+        "operationId": "LandscapeService_QueryRankList",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/landscapeQueryRankListResp"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "city",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "LandscapeService"
+        ]
+      }
+    },
+    "/v1/query/related_essay_list": {
+      "get": {
+        "summary": "查询相关文章",
+        "operationId": "LandscapeService_QueryRelatedEssayList",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/landscapeQueryRelatedEssayListResp"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "uuid",
+            "description": "UUID，一篇文章的唯一编号",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "pageNum",
+            "description": "本次请求结果实际页码, 一般与请求参数一致",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "pageSize",
+            "description": "分页大小",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "tags": [
+          "LandscapeService"
+        ]
+      }
+    },
+    "/v1/query/swiper_image_list": {
+      "get": {
+        "summary": "获取轮播图图片列表",
+        "operationId": "LandscapeService_QuerySwiperImageList",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/landscapeQuerySwiperImageListResp"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "tags": [
+          "LandscapeService"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "landscapeEssay": {
+      "type": "object",
+      "properties": {
+        "uuid": {
+          "type": "string",
+          "title": "UUID，一篇文章的唯一编号"
+        },
+        "title": {
+          "type": "string",
+          "title": "标题"
+        },
+        "content": {
+          "type": "string",
+          "title": "内容"
+        },
+        "time": {
+          "type": "string",
+          "format": "int64",
+          "title": "发表时间"
+        },
+        "city": {
+          "type": "string",
+          "title": "所属城市"
+        },
+        "type": {
+          "type": "string",
+          "title": "文章类型"
+        },
+        "image": {
+          "type": "string",
+          "title": "图片"
+        },
+        "hits": {
+          "type": "integer",
+          "format": "int32",
+          "title": "点击量"
+        },
+        "like": {
+          "type": "integer",
+          "format": "int32",
+          "title": "顶"
+        }
+      },
+      "title": "文章"
+    },
+    "landscapeProvince": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "title": "省份名称"
+        },
+        "cities": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "城市"
+        }
+      },
+      "title": "省份"
+    },
+    "landscapeQueryCityImageResp": {
+      "type": "object",
+      "properties": {
+        "image": {
+          "type": "string",
+          "title": "图片"
+        }
+      },
+      "title": "城市图片接口请求"
+    },
+    "landscapeQueryCityListResp": {
+      "type": "object",
+      "properties": {
+        "Provinces": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/landscapeProvince"
+          }
+        },
+        "success": {
+          "type": "boolean",
+          "title": "是否成功访问"
+        },
+        "errorCode": {
+          "type": "string",
+          "title": "错误码"
+        },
+        "errorMsg": {
+          "type": "string",
+          "title": "错误详情"
+        }
+      },
+      "title": "获取省份和城市的接口返回"
+    },
+    "landscapeQueryEssayListResp": {
+      "type": "object",
+      "properties": {
+        "essayList": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/landscapeEssay"
+          }
+        },
+        "success": {
+          "type": "boolean",
+          "title": "是否成功访问"
+        },
+        "errorCode": {
+          "type": "string",
+          "title": "错误码"
+        },
+        "errorMsg": {
+          "type": "string",
+          "title": "错误详情"
+        }
+      }
+    },
+    "landscapeQueryOneEssayResp": {
+      "type": "object",
+      "properties": {
+        "essay": {
+          "$ref": "#/definitions/landscapeEssay",
+          "title": "文章"
+        },
+        "success": {
+          "type": "boolean",
+          "title": "是否成功访问"
+        },
+        "errorCode": {
+          "type": "string",
+          "title": "错误码"
+        },
+        "errorMsg": {
+          "type": "string",
+          "title": "错误详情"
+        }
+      },
+      "title": "查询某一篇文章内容的返回"
+    },
+    "landscapeQueryRankListResp": {
+      "type": "object",
+      "properties": {
+        "uuid": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "文章UUID列表"
+        }
+      },
+      "title": "文章排行榜接口返回"
+    },
+    "landscapeQueryRelatedEssayListResp": {
+      "type": "object",
+      "properties": {
+        "essayList": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/landscapeEssay"
+          },
+          "title": "文章"
+        },
+        "success": {
+          "type": "boolean",
+          "title": "是否成功访问"
+        },
+        "errorCode": {
+          "type": "string",
+          "title": "错误码"
+        },
+        "errorMsg": {
+          "type": "string",
+          "title": "错误详情"
+        }
+      },
+      "title": "查询相关文章列表返回"
+    },
+    "landscapeQuerySwiperImageListResp": {
+      "type": "object",
+      "properties": {
+        "image": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "轮播图片列表"
+        },
+        "success": {
+          "type": "boolean",
+          "title": "是否成功访问"
+        },
+        "errorCode": {
+          "type": "string",
+          "title": "错误码"
+        },
+        "errorMsg": {
+          "type": "string",
+          "title": "错误详情"
+        }
+      },
+      "title": "获取轮播图图片列表返回"
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    }
+  }
+}
