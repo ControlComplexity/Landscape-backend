@@ -38,11 +38,15 @@ func QueryEssayList(ctx context.Context, req *api.QueryEssayListReq) (*api.Query
 
 func QueryOneEssay(ctx context.Context, req *api.QueryOneEssayReq) (*api.QueryOneEssayResp, error) {
 	db := Init()
-	do := &api.Essay{}
-	err := db.Model(&api.Essay{}).Where("uuid = ", req.Uuid).Limit(1).Find(do).Error
+	var essay model.EssayDO
+	err := db.Model(&model.EssayDO{}).Find(&essay).Where("uuid = ", req.Uuid).Limit(1).Error
+	fmt.Println("req.Uuid: ", req.Uuid, " essay: ", essay)
 	if err == nil {
 		return &api.QueryOneEssayResp{
-			Essay:     do,
+			Essay: &api.Essay{
+				Uuid:  essay.Uuid,
+				Title: essay.Title,
+			},
 			Success:   true,
 			ErrorCode: "200",
 		}, nil
@@ -52,24 +56,6 @@ func QueryOneEssay(ctx context.Context, req *api.QueryOneEssayReq) (*api.QueryOn
 		}, err
 	}
 }
-
-//	func QueryActivityList() (*api.QueryActivityListResp, error) {
-//		db := Init()
-//		var activities []api.Activity
-//		fmt.Println("db2:", db)
-//		db.Model(&api.Activity{}).Find(&activities)
-//		fmt.Println("activities:", activities)
-//		activitySlice := make([]*api.Activity, 0)
-//		for _, ac := range activities {
-//			activitySlice = append(activitySlice, &ac)
-//		}
-//		return &api.QueryActivityListResp{
-//			Data: &api.QueryActivityListResp_Data{
-//				ActivityList: activitySlice,
-//			},
-//			ErrorCode: "0",
-//		}, nil
-//	}
 
 func QuerySwiperImageList() (*api.QuerySwiperImageListResp, error) {
 	db := Init()
