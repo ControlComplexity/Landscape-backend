@@ -14,7 +14,7 @@ import (
 var (
 	configs    = &config.Config{}
 	logger     *zap.Logger
-	configPath = flag.String("config", "config/application.yml", "reservation-service config file")
+	configPath = flag.String("config", "config/landscape.yml", "reservation-service config file")
 )
 
 func InitLogger() {

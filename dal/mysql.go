@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/jinzhu/gorm"
+	_ "github.com/jinzhu/gorm/dialects/mysql"
 	"landscape/constant"
 	"landscape/github.com/landscape/api"
 	"landscape/model"
@@ -52,12 +53,32 @@ func QueryOneEssay(ctx context.Context, req *api.QueryOneEssayReq) (*api.QueryOn
 	}
 }
 
+//	func QueryActivityList() (*api.QueryActivityListResp, error) {
+//		db := Init()
+//		var activities []api.Activity
+//		fmt.Println("db2:", db)
+//		db.Model(&api.Activity{}).Find(&activities)
+//		fmt.Println("activities:", activities)
+//		activitySlice := make([]*api.Activity, 0)
+//		for _, ac := range activities {
+//			activitySlice = append(activitySlice, &ac)
+//		}
+//		return &api.QueryActivityListResp{
+//			Data: &api.QueryActivityListResp_Data{
+//				ActivityList: activitySlice,
+//			},
+//			ErrorCode: "0",
+//		}, nil
+//	}
+
 func QuerySwiperImageList() (*api.QuerySwiperImageListResp, error) {
 	db := Init()
-	do := []*model.Image{}
-	err := db.Model(&do).Find(do).Error
+	var imgs []model.Image
+	err := db.Model(&model.Image{}).Find(&imgs).Error
+	fmt.Println("imgs: ", imgs)
 	var images []string
-	for _, img := range do {
+
+	for _, img := range imgs {
 		images = append(images, img.URL)
 	}
 	if err == nil {

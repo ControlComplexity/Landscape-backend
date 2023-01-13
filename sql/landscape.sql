@@ -38,7 +38,7 @@ CREATE TABLE `swiper_image` (
                          `id` int(11) NOT NULL,
                          `uuid` varchar(255) DEFAULT NULL,
                          `title` varchar(255) DEFAULT NULL,
-                         `image` varchar(255) DEFAULT NULL,
+                         `url` varchar(255) DEFAULT NULL,
                          `time` timestamp(6) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(6),
                          `type` varchar(255) DEFAULT NULL,
                          `city` varchar(255) DEFAULT NULL,
